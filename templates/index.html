@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darsh-Ai | منصة الذكاء الاصطناعي الشاملة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: #020617;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        .neon-border {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .glass {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #3b82f6, #9333ea);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="p-4 md:p-8">
+
+    <header class="text-center py-10">
+        <h1 class="text-6xl font-black mb-4 gradient-text">Darsh-Ai</h1>
+        <p class="text-gray-400 text-lg">بوابتك الخاصة لأقوى أدوات الذكاء الاصطناعي</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="glass p-6 rounded-3xl neon-border">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">🎨 صانع الصور <span class="text-xs mr-2 bg-blue-600 px-2 py-1 rounded">Flux</span></h2>
+            <textarea id="imgPrompt" class="w-full bg-slate-900 border-none rounded-xl p-3 mb-4 h-24 focus:ring-2 focus:ring-blue-500" placeholder="وصف الصورة بالإنجليزية..."></textarea>
+            <button onclick="genImg()" id="imgBtn" class="w-full bg-blue-600 hover:bg-blue-700 py-3 rounded-xl font-bold transition">إنشاء</button>
+            <div id="imgResult" class="mt-4 hidden"><img id="resImg" class="w-full rounded-xl border border-blue-500/50"></div>
+        </div>
+
+        <div class="glass p-6 rounded-3xl neon-border">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">✍️ تحويل النصوص <span class="text-xs mr-2 bg-purple-600 px-2 py-1 rounded">Humanize</span></h2>
+            <textarea id="txtInput" class="w-full bg-slate-900 border-none rounded-xl p-3 mb-4 h-24 focus:ring-2 focus:ring-purple-500" placeholder="ضع النص هنا..."></textarea>
+            <button onclick="humanize()" id="txtBtn" class="w-full bg-purple-600 hover:bg-purple-700 py-3 rounded-xl font-bold transition">تحسين النص</button>
+            <div id="txtResult" class="mt-4 hidden p-3 bg-black/40 rounded-xl text-sm"></div>
+        </div>
+
+        <div class="glass p-6 rounded-3xl neon-border">
+            <h2 class="text-2xl font-bold mb-4 flex items-center">💬 مساعد درش <span class="text-xs mr-2 bg-green-600 px-2 py-1 rounded">GPT-4</span></h2>
+            <textarea id="chatInput" class="w-full bg-slate-900 border-none rounded-xl p-3 mb-4 h-24 focus:ring-2 focus:ring-green-500" placeholder="اسأل أي شيء..."></textarea>
+            <button onclick="chat()" id="chatBtn" class="w-full bg-green-600 hover:bg-green-700 py-3 rounded-xl font-bold transition">إرسال</button>
+            <div id="chatResult" class="mt-4 hidden p-3 bg-black/40 rounded-xl text-sm max-h-40 overflow-y-auto"></div>
+        </div>
+
+    </main>
+
+    <script>
+        async function genImg() {
+            const prompt = document.getElementById('imgPrompt').value;
+            const btn = document.getElementById('imgBtn');
+            if(!prompt) return;
+            btn.innerText = "جاري الرسم...";
+            const res = await fetch('/api/generate-image', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({prompt})});
+            const data = await res.json();
+            if(data.url) {
+                document.getElementById('resImg').src = data.url;
+                document.getElementById('imgResult').classList.remove('hidden');
+            }
+            btn.innerText = "إنشاء";
+        }
+
+        async function humanize() {
+            const text = document.getElementById('txtInput').value;
+            const btn = document.getElementById('txtBtn');
+            const resDiv = document.getElementById('txtResult');
+            if(!text) return;
+            btn.innerText = "جاري المعالجة...";
+            const res = await fetch('/api/humanize', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({text})});
+            const data = await res.json();
+            resDiv.innerText = "تم إرسال الطلب، تفقد سجل المعالجة.";
+            resDiv.classList.remove('hidden');
+            btn.innerText = "تحسين النص";
+        }
+
+        async function chat() {
+            const message = document.getElementById('chatInput').value;
+            const btn = document.getElementById('chatBtn');
+            const resDiv = document.getElementById('chatResult');
+            if(!message) return;
+            btn.innerText = "يفكر...";
+            const res = await fetch('/api/chat', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({message})});
+            const data = await res.json();
+            resDiv.innerText = data.content;
+            resDiv.classList.remove('hidden');
+            btn.innerText = "إرسال";
+        }
+    </script>
+</body>
+</html>
