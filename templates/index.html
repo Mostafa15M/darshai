@@ -3,46 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Darsh-Ai | التكنولوجيا بين يديك</title>
+    <title>Darsh-Ai | الإصدار النهائي</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Cairo', sans-serif; background: #020617; color: white; }
-        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
-        .neon-glow { box-shadow: 0 0 20px rgba(59, 130, 246, 0.4); }
-        .loader { border: 3px solid #f3f3f3; border-top: 3px solid #3b82f6; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; display: none; }
+        body { font-family: 'Cairo', sans-serif; background: #020617; color: white; min-height: 100vh; }
+        .glass { background: rgba(15, 23, 42, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.1); }
+        .neon-blue { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); border-color: rgba(59, 130, 246, 0.5); }
+        .loader { border: 3px solid transparent; border-top: 3px solid #3b82f6; border-radius: 50%; width: 24px; height: 24px; animation: spin 1s linear infinite; display: none; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="p-4 md:p-10">
 
-    <header class="text-center mb-16">
-        <h1 class="text-5xl md:text-70xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-600 mb-2">Darsh-Ai</h1>
-        <p class="text-gray-400">بوابة مصطفى منصور لأدوات الذكاء الاصطناعي</p>
+    <header class="text-center mb-12">
+        <h1 class="text-6xl font-black bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">Darsh-Ai</h1>
+        <p class="text-gray-400 mt-2">منصة الذكاء الاصطناعي الخاصة بـ مصطفى منصور</p>
     </header>
 
-    <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
         
-        <div class="glass p-8 rounded-3xl neon-glow">
-            <h2 class="text-2xl font-bold mb-6 flex items-center">🎨 توليد الصور (Flux)</h2>
-            <textarea id="imgPrompt" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl p-4 mb-4 outline-none focus:border-blue-500 transition" placeholder="وصف الصورة بالإنجليزية..."></textarea>
-            <button onclick="generateImage()" id="imgBtn" class="w-full bg-blue-600 hover:bg-blue-700 font-bold py-4 rounded-xl transition flex justify-center items-center gap-2">
-                <span id="imgBtnText">إنشاء الصورة</span>
+        <div class="glass p-8 rounded-[2rem] neon-blue">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">🎨 صانع الصور <span class="text-xs bg-blue-500/20 text-blue-400 px-2 py-1 rounded">FREE</span></h2>
+            <textarea id="imgPrompt" class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-4 mb-4 outline-none focus:border-blue-500 transition h-28" placeholder="اكتب وصف الصورة هنا..."></textarea>
+            <button onclick="generateImage()" id="imgBtn" class="w-full bg-blue-600 hover:bg-blue-700 py-4 rounded-2xl font-bold transition flex justify-center items-center gap-3">
+                <span id="imgBtnText">إنشاء الصورة الآن</span>
                 <div id="imgLoader" class="loader"></div>
             </button>
-            <div id="imgResult" class="mt-6 hidden">
-                <img id="resImg" src="" class="w-full rounded-2xl border border-blue-500/30">
+            <div id="imgResult" class="mt-8 hidden">
+                <img id="resImg" src="" class="w-full rounded-2xl shadow-2xl border border-white/10">
+                <a id="downBtn" href="#" download="darsh-ai-image.jpg" class="block text-center mt-4 text-sm text-blue-400 hover:underline">تحميل الصورة</a>
             </div>
         </div>
 
-        <div class="glass p-8 rounded-3xl neon-glow">
-            <h2 class="text-2xl font-bold mb-6 flex items-center">💬 مساعدك الذكي (GPT-4)</h2>
-            <textarea id="chatInput" class="w-full bg-slate-900/50 border border-slate-700 rounded-xl p-4 mb-4 outline-none focus:border-purple-500 transition h-24" placeholder="اسأل أي شيء..."></textarea>
-            <button onclick="sendChat()" id="chatBtn" class="w-full bg-purple-600 hover:bg-purple-700 font-bold py-4 rounded-xl transition flex justify-center items-center gap-2">
-                <span id="chatBtnText">إرسال السؤال</span>
+        <div class="glass p-8 rounded-[2rem] neon-blue">
+            <h2 class="text-2xl font-bold mb-6 flex items-center gap-2">💬 مساعد GPT-4 <span class="text-xs bg-purple-500/20 text-purple-400 px-2 py-1 rounded">PRO</span></h2>
+            <textarea id="chatInput" class="w-full bg-slate-900 border border-slate-700 rounded-2xl p-4 mb-4 outline-none focus:border-purple-500 transition h-28" placeholder="اسأل أي شيء يدور في ذهنك..."></textarea>
+            <button onclick="sendChat()" id="chatBtn" class="w-full bg-purple-600 hover:bg-purple-700 py-4 rounded-2xl font-bold transition flex justify-center items-center gap-3">
+                <span id="chatBtnText">إرسال للمساعد</span>
                 <div id="chatLoader" class="loader"></div>
             </button>
-            <div id="chatResult" class="mt-6 hidden p-4 bg-slate-900/80 rounded-xl border border-purple-500/20 max-h-60 overflow-y-auto text-sm leading-relaxed">
+            <div id="chatResult" class="mt-8 hidden p-5 bg-slate-900/50 rounded-2xl border border-white/5 text-gray-200 text-sm overflow-y-auto max-h-64">
             </div>
         </div>
 
@@ -51,66 +52,53 @@
     <script>
         async function generateImage() {
             const prompt = document.getElementById('imgPrompt').value;
-            if(!prompt) return alert("من فضلك اكتب وصفاً للصورة");
+            if(!prompt) return alert("من فضلك ادخل وصف الصورة");
 
-            toggleLoading('img', true);
-            
+            setLoading('img', true);
             try {
-                const response = await fetch('/api/generate-image', {
+                const res = await fetch('/api/generate-image', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({prompt: prompt})
+                    body: JSON.stringify({prompt})
                 });
-                const data = await response.json();
+                const data = await res.json();
                 if(data.url) {
-                    document.getElementById('resImg').src = data.url;
+                    const img = document.getElementById('resImg');
+                    img.src = data.url;
+                    document.getElementById('downBtn').href = data.url;
                     document.getElementById('imgResult').classList.remove('hidden');
-                } else {
-                    alert("عذراً، لم نتمكن من إنشاء الصورة حالياً.");
                 }
-            } catch (e) {
-                alert("حدث خطأ في الاتصال بالسيرفر");
-            }
-            toggleLoading('img', false);
+            } catch (e) { alert("حدث خطأ في الخادم"); }
+            setLoading('img', false);
         }
 
         async function sendChat() {
-            const msg = document.getElementById('chatInput').value;
-            if(!msg) return alert("اكتب سؤالك أولاً");
+            const message = document.getElementById('chatInput').value;
+            if(!message) return alert("اكتب سؤالك أولاً");
 
-            toggleLoading('chat', true);
-            const resDiv = document.getElementById('chatResult');
-            
+            setLoading('chat', true);
             try {
-                const response = await fetch('/api/chat', {
+                const res = await fetch('/api/chat', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({message: msg})
+                    body: JSON.stringify({message})
                 });
-                const data = await response.json();
+                const data = await res.json();
                 const content = data.choices[0].message.content;
+                const resDiv = document.getElementById('chatResult');
                 resDiv.innerText = content;
                 resDiv.classList.remove('hidden');
-            } catch (e) {
-                alert("حدث خطأ في معالجة الرد");
-            }
-            toggleLoading('chat', false);
+            } catch (e) { alert("خطأ في الاتصال"); }
+            setLoading('chat', false);
         }
 
-        function toggleLoading(type, isLoading) {
-            const btnText = document.getElementById(type + 'BtnText');
-            const loader = document.getElementById(type + 'Loader');
-            const btn = document.getElementById(type + 'Btn');
-            
-            if(isLoading) {
-                btnText.style.display = 'none';
-                loader.style.display = 'block';
-                btn.disabled = true;
-            } else {
-                btnText.style.display = 'block';
-                loader.style.display = 'none';
-                btn.disabled = false;
-            }
+        function setLoading(id, isLoading) {
+            const btn = document.getElementById(id + 'Btn');
+            const text = document.getElementById(id + 'BtnText');
+            const loader = document.getElementById(id + 'Loader');
+            btn.disabled = isLoading;
+            text.style.display = isLoading ? 'none' : 'block';
+            loader.style.display = isLoading ? 'block' : 'none';
         }
     </script>
 </body>
