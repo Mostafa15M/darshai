@@ -7,21 +7,24 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
-# 1. محرك توليد الصور (Flux)
+# 1. محرك توليد الصور (Pollinations AI - المجاني البديل لـ Muapi)
 @app.route('/api/generate-image', methods=['POST'])
 def generate_image():
     try:
         data = request.json
         prompt = data.get('prompt', '')
         if not prompt:
-            return jsonify({"error": "Prompt is required"}), 400
+            return jsonify({"error": "الوصف مطلوب"}), 400
             
-        url = "https://mu-devs.vercel.app/generate"
-        payload = {"prompt": prompt, "model": "flux"}
+        # تحسين الوصف لضمان جودة سينمائية
+        enhanced_prompt = f"{prompt}, cinematic lighting, 8k, highly detailed, professional photography"
+        # تحويل النص لرابط متوافق مع الـ URL
+        safe_prompt = requests.utils.quote(enhanced_prompt)
         
-        # إرسال الطلب من السيرفر لتخطي حماية المتصفح
-        response = requests.post(url, json=payload, timeout=60)
-        return jsonify(response.json())
+        # رابط الصورة المباشر
+        image_url = f"https://pollinations.ai/p/{safe_prompt}?width=1024&height=1024&model=flux"
+        
+        return jsonify({"url": image_url})
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
